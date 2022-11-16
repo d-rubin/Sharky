@@ -47,8 +47,8 @@ class World {
         this.setWorld();
         this.run();
         this.showWinOrLooseScreen();
-        this.collectitem(this.level.bottles, this.poisonedBubbles, this.statusBar_poison);
-        this.collectitem(this.level.coins, this.collectedCoins, this.statusBar_coins);
+        this.collectitem(this.level.bottles);
+        this.collectitem(this.level.coins);
     }
 
 
@@ -87,24 +87,32 @@ class World {
     }
 
 
-    collectitem(array, counter, statusbar) {
+    collectitem(array) {
+        let lastCollect = 0;
         setTimeout(() => {
-            let lastCollect = 0;
             let timespan = 1001;        
             setInterval(() => {
                 let now = new Date().getTime();
                 array.forEach((item) => {
                     if(this.character.isColliding(item) && timespan > 1000) {
                         this.disapear(item);                    
-                        counter += 1;
+                        this.coinOrBubble(item);
                         lastCollect = new Date().getTime();
-                        statusbar.setPercentage(counter);
-                        this.switchsound(item);
-                    }
-                });
+                        this.switchsound(item);}});
                 timespan = now - lastCollect;
             }, 1000 / 60);
-        }, 1000);
+        }, 1000);}
+
+
+    coinOrBubble(item) {
+        if(item instanceof Bottle) {
+            this.poisonedBubbles += 1;
+            this.statusBar_poison.setPercentage(this.poisonedBubbles);
+        }
+        else {
+            this.collectedCoins += 1;
+            this.statusBar_coins.setPercentage(this.collectedCoins);
+        }
     }
 
 
