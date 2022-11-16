@@ -1,7 +1,8 @@
 @import url('fonts/Lobster/Lobster-Regular.ttf');
 
 canvas {
-    background-image: url('img/unnamed.png');
+    background-image: 
+    url('img/realistic-underwater-background-ocean-deep-water-sea-under-water-level-sun-rays-blue-wave-horizon-water-surface-3d-vector-concept.jpg');
     background-repeat: no-repeat;
     object-fit: cover;
     background-position: center;
@@ -9,12 +10,14 @@ canvas {
 }
 
 body {
-    font-family: 'Lobster', cursive ;
+    font-family: 'Lobster', cursive;
+    color: rgb(28, 25, 236);
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(img/unnamed.png);
+    background-image: url('img/c3be5a799838d5810c7242e278e0cd93b678b7e1356caff134bff613c7e35df0.jpg');
+    object-fit: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -61,6 +64,7 @@ body {
 
 .tryAgain {
     width: 250px;
+    cursor: pointer;
 }
 
 .youWin {
@@ -150,31 +154,116 @@ body {
 .startGameImg {
     object-fit: contain;
     width: 200px;
+    cursor: pointer;
+}
 
+.turnScreen {
+    display: none;
 }
 
 .d-none {
     display: none;
 }
 
+#mute {
+    display: flex;
+    position: absolute;
+    top: 11%;
+    right: 32%;
+    width: 48px;
+    cursor: pointer;
+}
+
+@media (max-width: 1700px) {
+    #mute {
+        right: 30%;
+    }
+}
+
+@media (max-width: 1600px) {
+    #mute {
+        right: 28%;
+    }
+}
+
+@media (max-width: 1400px) {
+    #mute {
+        right: 24%;
+    }
+}
+
+@media (max-width: 1200px) {
+    #mute {
+        right: 20%;
+    }
+}
+
+@media (max-width: 1000px) {
+    #mute {
+        right: 15%;
+    }
+}
+
+@media (max-width: 800px) {
+    #mute {
+        right: 7%;
+    }
+}
+
 /* Smartphones */
 @media only screen and (max-width: 720px) {
+    
+
     canvas {
         width: 100%;
     }
+
     h1 {
         display: none
     }
+
+    #mute {
+        top: 1%;
+        right: 1%;
+    }
+
     .mobileOverlay {
         display: flex;
         width: 100%;
         height: 100%;
     }
+
+    .attackKeys {
+        width: 82%;
+    }
+
     .startscreen {
         z-index: 1;
+        top: 5%;
+        width: 100%;
     }
+
+    .startGame {
+        left: 25%;
+    }
+
     .mobileOverlay {
         height: 48%;
+    }
+
+    .turnScreen {
+        z-index: 2;
+        display: flex;
+        position: absolute;
+        font-size: 30px;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        opacity: 0.8;
+        background-color: rgb(35, 84, 124);
     }
 }
 
@@ -183,30 +272,24 @@ body {
     canvas {
         height: 100vh;
     }
+
     h1 {
         display: none;
     }
+
+    #mute {
+        top: 3%;
+        right: 1%;
+    }
+
     .mobileOverlay {
         display: flex;
-        width: 100%;
-        height: 100%;
-    }
-}
-
-/* @media (max-width > 500) {
-    .instructions {
-        width: 411px;
+        width: 90%;
+        height: 30%;
+        top: 69%;
+        z-index: 0;
     }
     .startscreen {
-        top: 1%;
+        z-index: 1;
     }
-    .startGameImg {
-        width: 150px;
-    }
-    .startGame {
-        left: 33%;
-    }
-    .attack {
-        width: 210px;
-    }
-} */
+}

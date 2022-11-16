@@ -145,3 +145,25 @@ function openStartscreen() {
     document.getElementById('gameOver').classList.add('d-none');
     document.getElementById('youWin').classList.add('d-none');
 }
+
+
+function mute() {
+    let mute = document.getElementById('mute');
+    let audio = document.querySelectorAll('audio');
+    if(mute.src == "http://daniel-rubin.developerakademie.net/Sharkie/img/mute-3-48.png") {
+        mute.src = "img/volume-up-4-48.png";
+        [].forEach.call(audio, function(elem) { audioMute(elem); });
+    }
+    else {
+        mute.src = "img/mute-3-48.png";
+        [].forEach.call(audio, function(elem) { audioVolume(elem); });
+    }
+}
+
+function audioMute(elem) {
+    elem.muted = true;
+}
+
+function audioVolume(elem) {
+    elem.mute = false;
+}

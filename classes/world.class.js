@@ -32,9 +32,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar_life = new StatusBar(IMAGES_LIFE, 100, -20);
-    statusBar_poison = new StatusBar(IMAGES_Poison, 0, 60);
-    statusBar_coins = new StatusBar(IMAGES_Coin, 0, 140);
+    statusBar_life = new StatusBar(IMAGES_LIFE, 100, -5);
+    statusBar_poison = new StatusBar(IMAGES_Poison, 0, 35);
+    statusBar_coins = new StatusBar(IMAGES_Coin, 0, 75);
     throwableObjects = [];
     poisonedBubbles = 0;
     collectedCoins = 0;
@@ -93,15 +93,33 @@ class World {
             let timespan = 1001;        
             setInterval(() => {
                 let now = new Date().getTime();
-                array.forEach((item) => {
+                array.forEach((item, index) => {
                     if(this.character.isColliding(item) && timespan > 1000) {
-                        this.disapear(item);                    
-                        this.coinOrBubble(item);
+                        this.deleteItem(item, index);
                         lastCollect = new Date().getTime();
-                        this.switchsound(item);}});
+                        this.switchsound(item);
+                    }});
                 timespan = now - lastCollect;
-            }, 1000 / 60);
-        }, 1000);}
+            }, 1000 / 20);
+        }, 1000);
+    }
+
+
+    deleteItem(item, index) {
+        this.disapear(item);                    
+        this.coinOrBubble(item);
+        this.spliceItem(item, index);
+    }
+
+    
+    spliceItem(item, index) {
+        if(item instanceof Bottle) {
+            this.level.bottles.splice(index, 1);
+        }
+        else {
+            this.level.coins.splice(index, 1);
+        }
+    }
 
 
     coinOrBubble(item) {
