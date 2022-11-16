@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="classes/drawable-object.class.js"></script>
+    <script src="classes/movable-object.class.js"></script>
+    <script src="classes/background-object.class.js"></script>
+    <script src="classes/character.class.js"></script>
+    <script src="classes/bottle.class.js"></script>
+    <script src="classes/coin.class.js"></script>   
+    <script src="classes/jellyfish.class.js"></script>
+    <script src="classes/pufferfish.class.js"></script>
+    <script src="classes/status-bar.class.js"></script>
+    <script src="classes/throwable-object.class.js"></script>
+    <script src="classes/barrier.class.js"></script>
+    <script src="classes/keyboard.class.js"></script>
+    <script src="classes/level.class.js"></script>
+    <script src="classes/boss.class.js"></script>
+    
+    <script src="levels/level1.js"></script>
+    <script src="classes/world.class.js"></script>
+    <script src="js/game.js"></script>
+
+    <title>Sharky</title>
+</head>
+
+<body>
+    
+    <h1>Sharky</h1>
+    <div id="fullscreen">
+        <canvas width="720" height="480" id="canvas"></canvas>
+    </div>
+
+    <div class="startscreen" id="startscreen">
+        <div class="instructions">
+            <div class="moveShark">
+                <img class="move" src="img/6.Botones/Tittles/Move title.png" alt="">
+                <img class="arrows" src="img/6.Botones/Key/arrow keys.png" alt="">
+            </div>
+            <div class="attack">
+                <div>
+                    <img class="attackImg" src="img/6.Botones/Tittles/Attack tittle.png" alt="">
+                </div>
+                <div class="attackKeys">
+                    <img class="dKey" src="img/6.Botones/Key/D key.png" alt="">
+                    <img class="spaceKey" src="img/6.Botones/Key/Space Bar key.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="startGame">
+            <img src="img/6.Botones/Start/2.png" alt="Start Game" class="startGameImg" onclick="init(), closeStartscreen()">
+        </div>
+    </div>
+
+    <div class="mobileOverlay">
+        <div class="moveButtons">
+            <div class="upButton"><img src="img/up.png" alt="Up" id="buttonUp"></div>
+            <img src="img/left.png" alt="Left" id="buttonLeft">
+            <img src="img/down.png" alt="Down" id="buttonDown">
+            <img src="img/right.png" alt="Right" id="buttonRight">    
+        </div>
+        <div class="attackButtons">
+            <img src="img/fin.png" alt="Flosse" id="buttonFin">
+            <img src="img/bubble.png" alt="Blase" id="buttonBubble">
+        </div>
+
+    </div>
+
+    <div class="gameOverContainer d-none" id="gameOver">
+        <img src="img/6.Botones/Tittles/Game Over/Recurso 12.png" alt="Game Over" class="gameOver">
+        <img src="img/6.Botones/Try again/Recurso 17.png" alt="Try Again" onclick="init(), c"  class="tryAgain">
+    </div>
+    <div class="youWin d-none" id="youWin">
+        <img src="img/6.Botones/Tittles/You win/Recurso 21.png" alt="You Win" class="youWinImg">
+        <img src="img/6.Botones/Try again/Recurso 17.png" alt="Try Again" onclick="init()"  class="tryAgain">
+    </div>
+
+</body>
+</html>

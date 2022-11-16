@@ -1,0 +1,212 @@
+@import url('fonts/Lobster/Lobster-Regular.ttf');
+
+canvas {
+    background-image: url('img/unnamed.png');
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-position: center;
+    display: block;
+}
+
+body {
+    font-family: 'Lobster', cursive ;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(img/unnamed.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+}
+
+.mobileOverlay {
+    display: none;
+    position: absolute;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.moveButtons {
+    width: 155px;
+    height: 100px;
+}
+
+.upButton {
+    display: flex;
+    justify-content: center;
+}
+
+.attackButtons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 200px;
+    height: 70px;
+}
+
+.gameOverContainer {
+    position: absolute;
+    top: 25%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gameOver {
+    width: 500px;
+    margin-bottom: 32px;
+}
+
+.tryAgain {
+    width: 250px;
+}
+
+.youWin {
+    position: absolute;
+    top: 27%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.youWinImg {
+    width: 500px;
+}
+
+.startscreen {
+    display: flex;
+    position: absolute;
+    display: flex;
+    top: 25%;
+}
+
+.instructions {
+    display: flex;
+    width: 720px;
+    height: 150px;
+    justify-content: space-evenly;
+}
+
+.moveShark {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+}
+
+.move {
+    width: 150px;
+    object-fit: contain;
+}
+
+.arrows {
+    width: 150px;
+    object-fit: contain;
+    height: 150px;
+}
+
+.attack {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    height: 136px;
+}
+
+.attackImg {
+    width: 100px;
+    object-fit: contain;
+}
+
+.attackKeys {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.dKey {
+    width: 50px;
+    object-fit: contain;
+}
+
+.spaceKey {
+    width: 150px;
+    object-fit: contain;
+}
+
+.startGame {
+    position: absolute;
+    display: flex;
+    top: 190px;
+    left: 35%;
+    justify-content: center;
+}
+
+.startGameImg {
+    object-fit: contain;
+    width: 200px;
+
+}
+
+.d-none {
+    display: none;
+}
+
+/* Smartphones */
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+    h1 {
+        display: none
+    }
+    .mobileOverlay {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+    .startscreen {
+        z-index: 1;
+    }
+    .mobileOverlay {
+        height: 48%;
+    }
+}
+
+/* Smartphones */
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+    h1 {
+        display: none;
+    }
+    .mobileOverlay {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* @media (max-width > 500) {
+    .instructions {
+        width: 411px;
+    }
+    .startscreen {
+        top: 1%;
+    }
+    .startGameImg {
+        width: 150px;
+    }
+    .startGame {
+        left: 33%;
+    }
+    .attack {
+        width: 210px;
+    }
+} */
