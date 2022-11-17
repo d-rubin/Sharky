@@ -6,11 +6,11 @@ class Barrier extends MovableObject {
     constructor(imagePath) {
         super().loadImage(imagePath);
 
-        this.x = 300 + Math.random() * 300; // Zahl zwischen 300 und 600
+        this.x = 300 + Math.random() * 300;
         this.animate();
     }
 
-    // Verringert x mit 60 Fps
+    // Verringert x mit 30 Fps
     animate() {
         this.moveLeft();
     }

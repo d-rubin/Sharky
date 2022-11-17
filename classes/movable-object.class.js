@@ -12,6 +12,11 @@ class MovableObject extends DrawableObject {
     timeCollision = 0;
     lastCollision;
 
+
+    /**
+     * Animates an Array with an Intervall
+     * @param {array of Paths} array - Images
+     */
     playAnimation(array) {
         setInterval(() => {
             let i = this.currentImage % array.length; // i ist immer zwischen 0 bis länge des Arrays und wiederholt sich 
@@ -21,6 +26,11 @@ class MovableObject extends DrawableObject {
         }, 1000 / 5);
     }
 
+
+    /**
+     * Animates an Array without an Intervall
+     * @param {array of Paths} array - Images
+     */
     animationLoop(array){
         let i = this.currentImage % array.length; // i ist immer zwischen 0 bis länge des Arrays und wiederholt sich 
         let path = array[i];
@@ -31,15 +41,15 @@ class MovableObject extends DrawableObject {
 
     moveLeft(){
         setInterval(() => {
-            this.x -= 0.3;
-        }, 1000 / 60);
+            this.x -= 0.6;
+        }, 1000 / 30);
     }
 
 
     moveRight(){
         setInterval(() => {
-            this.x += 0.3;
-        }, 1000 / 60);
+            this.x += 0.6;
+        }, 1000 / 30);
     }
 
 
@@ -63,14 +73,36 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    
+    /**
+     * Colliding with Offset For Character
+     * @param {MovableObject} mo - The Object, that is Colliding with the Character.
+     * @returns True when a Collisson is happening
+     */
     isColliding(mo) {
-        return this.x + (this.width - 30) > mo.x &&
-        this.y + (this.height -50) > mo.y &&
-        (this.x + 50) < mo.x + mo.width &&
-        (this.y + 70) < mo.y + mo.height;
+        return this.x + (this.width - 40) > mo.x &&
+        this.y + (this.height -60) > mo.y &&
+        (this.x + 60) < mo.x + mo.width &&
+        (this.y + 80) < mo.y + mo.height;
     }
 
+    // Colliding with Offset for Bubble on Jellyfish
+    isCollidingBubble(mo) {
+        return this.x + (this.width - 20) > mo.x &&
+        this.y + (this.height -20) > mo.y &&
+        (this.x + 20) < mo.x + mo.width &&
+        (this.y + 20) < mo.y + mo.height;
+    }
+
+    // Colliding with Offset for Bubble on Boss
+    isCollidingBubbleBoss(mo) {
+        return this.x + (this.width - 20) > (mo.x + 20) &&
+        this.y + (this.height -20) > (mo.y + 120) &&
+        (this.x + 20) < mo.x + (mo.width - 20) &&
+        (this.y + 20) < mo.y + (mo.height - 80);
+    }
+
+
+    // Colliding without Offset
     isCollidingFinSlap(mo) {
         return this.x + this.width > mo.x &&
         this.y + this.height > mo.y &&
@@ -78,7 +110,15 @@ class MovableObject extends DrawableObject {
         this.y < mo.y + mo.height;
     }
 
+    // Colliding with Offset for Character on Boss
+    isCollidingBoss(mo) {
+        return this.x + (this.width - 40) > (mo.x + 20) &&
+        this.y + (this.height -60) > (mo.y + 120) &&
+        (this.x + 60) < mo.x + (mo.width - 20) &&
+        (this.y + 80) < mo.y + (mo.height - 80);
+    }
 
+    // Checks with what Instance the Character collides and sets the Time
     checkColliissions() {
         this.timeNow = new Date().getTime();
         this.lastCollision = this.timeNow - this.timeCollision;
@@ -87,29 +127,38 @@ class MovableObject extends DrawableObject {
         });
     }
 
+    // Chooses witch animation is played
     characterOrEnemyHurt(enemy) {
         if(this.world.character.isCollidingFinSlap(enemy) && this.world.keyboard.SPACE && !enemy.isDead()) {
             this.checkEnemyType(enemy);
             if(enemy instanceof Pufferfish) {
-                enemy.energy = 0;
-            }
+                enemy.energy = 0;}
         }
-        else if(this.world.character.isColliding(enemy) && !enemy.isDead() && this.lastCollision > 1000) {
+        else if(this.world.character.isColliding(enemy) && !enemy.isDead() && this.lastCollision > 1000 && (enemy instanceof Pufferfish || enemy instanceof Jellyfish)) {
             this.timeCollision = new Date().getTime();
-            this.checkEnemyType(enemy);
-            this.hit();
-            this.isHurt();
+            this.characterHurt(enemy);
             this.world.statusBar_life.setPercentage(this.world.character.energy);
         }
+        else if(this.world.character.isCollidingBoss(enemy) && enemy instanceof Boss && this.lastCollision > 1000) {
+            this.timeCollision = new Date().getTime();
+            this.characterHurt(enemy);
+            this.world.statusBar_life.setPercentage(this.world.character.energy);}
+    }
+
+    characterHurt(enemy) {
+        this.checkEnemyType(enemy);
+        this.hit();
+        this.isHurt();
     }
 
 
     hurtsound(path) {
         const audio = new Audio(path);
+        audio.volume = 0.2;
         audio.play();
     }
 
-
+    // Checks with wich Instance the Character collides
     checkEnemyType(enemy) {
         if(enemy instanceof Jellyfish && !this.world.character.isDead()) {
             this.lastColliding = true;

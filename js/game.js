@@ -10,6 +10,8 @@ function init() {
     document.getElementById('youWin').classList.add('d-none');
 }
 
+
+// Gets the Keys that are pressed
 window.addEventListener("keydown", (e) => {
     if(e.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -31,6 +33,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 
+// Turns the varables back
 window.addEventListener("keyup", (e) => {
     if(e.keyCode == 39) {
         keyboard.RIGHT = false;
@@ -51,6 +54,8 @@ window.addEventListener("keyup", (e) => {
         keyboard.D = false;
 });
 
+
+// Gets the Buttons on Mobile Displays
 function mobileButtons() {
         document.getElementById('buttonUp').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -113,32 +118,11 @@ function mobileButtons() {
         });
 }
 
-function fullscreen() {
-    let fullscreen = document.getElementById('fullscreen');
-    enterFullscreen(fullscreen);
-}
-
-function enterFullscreen(element) {
-    if(element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
-      element.msRequestFullscreen();
-    } else if(element.webkitRequestFullscreen) {  // iOS Safari
-      element.webkitRequestFullscreen();
-    }
-}
-
-function exitFullscreen() {
-    if(document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if(document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
-}
 
 function closeStartscreen() {
     document.getElementById('startscreen').classList.add('d-none');
 }
+
 
 function openStartscreen() {
     document.getElementById('startscreen').classList.remove('d-none');
@@ -146,7 +130,7 @@ function openStartscreen() {
     document.getElementById('youWin').classList.add('d-none');
 }
 
-
+// Mutes all Audio when the Button is pressed
 function mute() {
     let mute = document.getElementById('mute');
     let audio = document.querySelectorAll('audio');

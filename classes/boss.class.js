@@ -3,7 +3,7 @@ class Boss extends MovableObject {
     y = 0;
     width = 400;
     height = 400;
-    energy = 10000;
+    energy = 10;
     hurt = false;
     i = 0;
     timeSet = 0;
@@ -71,6 +71,7 @@ class Boss extends MovableObject {
         this.animateIntro();
     }
 
+    // animate The Intro of the Boss and Start the normal animation
     animateIntro() {
         setTimeout(() => {
             let intro = setInterval(() => {
@@ -80,14 +81,17 @@ class Boss extends MovableObject {
                         clearInterval(intro);
                         this.animateMain();
                         this.moveLeft();
+                        world.statusBar_Boss.x = 1800;
+                        world.statusBar_Boss.moveLeft();
                     }, 1250);
                 }
             }, 1000 / 5);  
         }, 2000);
     }
 
-    animateMain() {
 
+    // Normal animation (switch between swim and attack)
+    animateMain() {
         setInterval(() => {
             this.now = new Date().getTime();
             if(this.isDead() && this.i < 5) {
@@ -108,12 +112,13 @@ class Boss extends MovableObject {
         this.playsound();
     }
 
+
     moveLeft(){
         setInterval(() => {
             if(!this.isDead()) {
-            this.x -= 0.1;
+            this.x -= 0.2;
             }
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 
     attackLoop() {
@@ -131,11 +136,25 @@ class Boss extends MovableObject {
     }
 
 
+    audioBoss = new Audio('audio/orca.mp3');
+
+
     playsound() {
         setInterval(() => {
-            const audio = new Audio('audio/orca.mp3');
-            audio.volume = 0.5;
-            audio.play();
-        }, 7000);
+            this.audioBoss.volume = 0.5;
+            this.audioBoss.play();
+            if(this.checkForDead()) {
+                this.audioBoss.muted = true;
+                this.audioBoss.pause();
+            }
+        }, 8000);
+    }
+
+    checkForDead() {
+        setInterval(() => {
+            if(this.isDead() || world.character.isDead()) {
+                this.audioBoss.pause();
+            }
+        }, 1000 / 30);
     }
 }

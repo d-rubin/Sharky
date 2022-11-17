@@ -3,6 +3,7 @@ class Pufferfish extends MovableObject {
     height = 80;
     count = 0;
 
+    // contruct Pufferfish random
     constructor(swim, transition, bubble, dead) {
         super();
         this.dead = dead;
@@ -30,6 +31,7 @@ class Pufferfish extends MovableObject {
         this.moveDown();
     }
 
+    // changes the animation after a given time
     autoChange() {
         if(!this.isDead()) {
             this.playSwimAnimation();
@@ -82,6 +84,7 @@ class Pufferfish extends MovableObject {
         }, 1000 / 5);
     }
 
+
     playDeadAnimation() {
         if(this.count < 4) {
             this.animationLoop(this.dead);
@@ -91,21 +94,21 @@ class Pufferfish extends MovableObject {
     }
 
 
-
     moveLeft(){
         setInterval(() => {
             if(!this.isDead()) {
-            this.x -= 0.3;
+            this.x -= 0.6;
             }
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 
+    
     moveDown() {
         setInterval(() => {
             if(this.isDead()) {
-                this.y += 3;
-                this.x += 4;
+                this.y += 6;
+                this.x += 8;
             }
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 }

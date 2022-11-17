@@ -223,8 +223,7 @@ body {
     }
 
     #mute {
-        top: 1%;
-        right: 1%;
+        display: none;
     }
 
     .mobileOverlay {
@@ -278,8 +277,7 @@ body {
     }
 
     #mute {
-        top: 3%;
-        right: 1%;
+        display: none;
     }
 
     .mobileOverlay {

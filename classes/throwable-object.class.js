@@ -1,6 +1,6 @@
 class ThrowableObject extends MovableObject {
     speedY = 0;
-    acceleration = 0.1;
+    acceleration = 0.2;
 
     constructor(x, y, path) {
         super().loadImage(path);
@@ -17,13 +17,16 @@ class ThrowableObject extends MovableObject {
        }, 1000 / 60);
     }
 
+
+    // Checks if the Bubble is colliding 
     checkColliissions() {
         world.level.enemies.forEach((enemy) => {
-            if(this.isColliding(enemy) && enemy instanceof Jellyfish) {
+            if(this.isCollidingBubble(enemy) && enemy instanceof Jellyfish) {
                 enemy.energy = 0;
             }
-            else if(this.isColliding(enemy) && enemy instanceof Boss) {
-                enemy.energy -= 10;
+            else if(this.isCollidingBoss(enemy) && enemy instanceof Boss) {
+                enemy.energy -= 0.1;
+                world.statusBar_Boss.setPercentage(enemy.energy);
                 enemy.hurt = true;
             }
         });
@@ -39,8 +42,8 @@ class ThrowableObject extends MovableObject {
 
     moveRight(){
         setInterval(() => {
-            this.x += 5;
-        }, 1000 / 60);
+            this.x += 10;
+        }, 1000 / 30);
     }
 
 
@@ -48,6 +51,6 @@ class ThrowableObject extends MovableObject {
         setInterval(() => {
             this.y -= this.speedY;
             this.speedY += this.acceleration;
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 }

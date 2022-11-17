@@ -86,7 +86,7 @@ class Character extends MovableObject {
     ];
 
     world;
-    speed = 4;
+    speed = 6;
     array = [];
     timePassed = 0;
     lastKeydown = 0;
@@ -116,7 +116,7 @@ class Character extends MovableObject {
             this.moveLeft();
             this.isDead();
             this.world.camera_x = -this.x;
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 
     moveRight() {
@@ -148,7 +148,7 @@ class Character extends MovableObject {
         }
     }
 
-
+    // Count the Time in that no Event happened
     setTimePassed() {
         setTimeout(() => {
             let setTime = new Date().getTime();
@@ -160,7 +160,7 @@ class Character extends MovableObject {
         }, 10000);
     }
 
-
+    // Choose witch Animation and Sound to play
     playAnimations() {
         let i = 0;
         setInterval(() => {

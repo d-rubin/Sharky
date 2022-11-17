@@ -32,9 +32,10 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar_life = new StatusBar(IMAGES_LIFE, 100, -5);
-    statusBar_poison = new StatusBar(IMAGES_Poison, 0, 35);
-    statusBar_coins = new StatusBar(IMAGES_Coin, 0, 75);
+    statusBar_life = new StatusBar(IMAGES_LIFE, 100, -5, 10);
+    statusBar_poison = new StatusBar(IMAGES_Poison, 0, 35, 10);
+    statusBar_coins = new StatusBar(IMAGES_Coin, 0, 75, 10);
+    statusBar_Boss = new StatusBar(IMAGES_LIFE, 100, 75, 3000);
     throwableObjects = [];
     poisonedBubbles = 0;
     collectedCoins = 0;
@@ -52,13 +53,16 @@ class World {
     }
 
 
+    // Clears all Intervalls at the End
     clearAllIntervalls() {
         setTimeout(() => {
             for(let i = 0; i < 999; i++) window.clearInterval(i);
-        }, 3000);
+        }, 2500);
     }
+
+
   
-    
+    // Shows the Endscreen
     showWinOrLooseScreen() {
             setInterval(() => {
                 if(this.character.isDead()) {
@@ -69,7 +73,7 @@ class World {
                     this.showWinScreen();
                     this.clearAllIntervalls();
                 }
-            }, 1000 /60);
+            }, 1000 / 120);
     }
 
 
@@ -86,27 +90,27 @@ class World {
     }, 3000);
     }
 
-
+    // Collects an Item when colliding
     collectitem(array) {
-        let lastCollect = 0;
+        // let lastCollect = 0;
         setTimeout(() => {
-            let timespan = 1001;        
+            // let timespan = 1001;        
             setInterval(() => {
-                let now = new Date().getTime();
+                // let now = new Date().getTime();
                 array.forEach((item, index) => {
-                    if(this.character.isColliding(item) && timespan > 1000) {
+                    if(this.character.isColliding(item)) {
                         this.deleteItem(item, index);
-                        lastCollect = new Date().getTime();
+                        // lastCollect = new Date().getTime();
                         this.switchsound(item);
                     }});
-                timespan = now - lastCollect;
-            }, 1000 / 20);
+                // timespan = now - lastCollect;
+            }, 1000 / 30);
         }, 1000);
     }
 
-
+    // Deletes the Item out of the given Array
     deleteItem(item, index) {
-        this.disapear(item);                    
+        // this.disapear(item);                    
         this.coinOrBubble(item);
         this.spliceItem(item, index);
     }
@@ -121,7 +125,7 @@ class World {
         }
     }
 
-
+    // Checks if Instance is Coin or Bubble
     coinOrBubble(item) {
         if(item instanceof Bottle) {
             this.poisonedBubbles += 1;
@@ -134,25 +138,18 @@ class World {
     }
 
 
+    audioBottle = new Audio('audio/bottle.wav');
+    audioCoin = new Audio('audio/coin.wav');
+
+
+    // Plays sound based on the Instance
     switchsound(item) {
         if(item instanceof Bottle) {
-            const audio = new Audio('audio/bottle.wav');
-            audio.play();
+            this.audioBottle.play();
         }
         else {
-            const audio = new Audio('audio/coin.wav');
-            audio.play();
+            this.audioCoin.play();
         }
-    }
-
-
-    disapear(bottle) {
-        setInterval(() => {
-            if(bottle.width >= 0) {
-                bottle.width -= 2;
-                bottle.height -= 2;
-            }
-        }, 1000 / 60);
     }
 
 
@@ -160,20 +157,32 @@ class World {
         this.character.world = this;
     }
 
+    audioWater = new Audio('audio/water.wav');
+
+
+    checkIfGameEnded() {
+        setInterval(() => {
+            if(this.character.isDead() || this.level.enemies[11].isDead()) {
+                this.audioWater.muted = true;
+            }
+        }, 1000/30);
+    }
+
 
     run() {
+        this.checkIfGameEnded();
         setInterval(() => {
             this.checkThrowObjects();
             this.character.checkColliissions();
         }, 1000 / 5);
         setInterval(() => {
-            const audio = new Audio('audio/water.wav');
-            audio.volume = 0.8;
-            audio.play();
-        }, 2000);
+            this.audioWater.volume = 0.8;
+            this.audioWater.play();
+        }, 4000);
     }
 
 
+    // Checks if the Character is shooting a normal or a green Bubble
     checkThrowObjects() {
         if(!this.character.isDead() && this.keyboard.D && this.poisonedBubbles == 0) {
             let bubble = new ThrowableObject((this.character.x + this.character.width), (this.character.y + this.character.height / 2), 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
@@ -190,57 +199,58 @@ class World {
     }
 
 
+    audioBubble = new Audio('audio/water.wav');
+
+
     bubblesound() {
-        const audio = new Audio('audio/water.wav');
-        audio.play();
+        this.audioBubble.play();
     }
 
 
     animationLoop(array){
-        let i = this.character.currentImage % array.length; // i ist immer zwischen 0 bis länge des Arrays und wiederholt sich 
+        let i = this.character.currentImage % array.length;
         let path = array[i];
         this.character.img = this.character.imageCache[path];
         this.character.currentImage++;
     }
 
-
+    // Draws the Objects on the Canvas
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0); // Verschiebt den ctx um camera_x
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);  
 
-        this.ctx.translate(-this.camera_x, 0); // Schiebt den ctx wider zurück
+        this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar_life);
         this.addToMap(this.statusBar_poison);
         this.addToMap(this.statusBar_coins);
-        this.ctx.translate(this.camera_x, 0); // Verschiebt den ctx um camera_x
+        this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);  
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.enemies);
-        this.ctx.translate(-this.camera_x, 0); // Schiebt den ctx wider zurück
-        let self = this; // draw() wird immer wieder aufgerufen
+        this.addToMap(this.statusBar_Boss);
+        this.ctx.translate(-this.camera_x, 0);
+        let self = this;
         requestAnimationFrame(function() {
             self.draw();
         });
     }
 
-
+    /**
+     * Draw an Array of Objects on the Canvas
+     * @param {DrawableObject} objects
+     */
     addObjectsToMap(objects) {
-        try {
         objects.forEach(object => {
             this.addToMap(object);
         });
-        }
-        catch(e) {
-            console.warn(e);
-            console.log(objects);
-        }
     }
 
 
+    // Adds only one Object to the Canvas
     addToMap(mo) {
         if(mo.otherDirection) {
             this.flipImage(mo);
@@ -251,7 +261,7 @@ class World {
         }
     }
     
-
+    // Flips the Img if the Character goes back
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -259,7 +269,7 @@ class World {
         mo.x = mo.x * -1;
     }
 
-
+    // Flips the Img back to normal
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
