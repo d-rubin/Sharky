@@ -156,6 +156,7 @@ class MovableObject extends DrawableObject {
         const audio = new Audio(path);
         audio.volume = 0.2;
         audio.play();
+        allAudios.push(audio);
     }
 
     // Checks with wich Instance the Character collides

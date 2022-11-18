@@ -92,25 +92,19 @@ class World {
 
     // Collects an Item when colliding
     collectitem(array) {
-        // let lastCollect = 0;
-        setTimeout(() => {
-            // let timespan = 1001;        
+        setTimeout(() => {   
             setInterval(() => {
-                // let now = new Date().getTime();
                 array.forEach((item, index) => {
                     if(this.character.isColliding(item)) {
                         this.deleteItem(item, index);
-                        // lastCollect = new Date().getTime();
                         this.switchsound(item);
                     }});
-                // timespan = now - lastCollect;
             }, 1000 / 30);
         }, 1000);
     }
 
     // Deletes the Item out of the given Array
-    deleteItem(item, index) {
-        // this.disapear(item);                    
+    deleteItem(item, index) {               
         this.coinOrBubble(item);
         this.spliceItem(item, index);
     }
@@ -146,9 +140,11 @@ class World {
     switchsound(item) {
         if(item instanceof Bottle) {
             this.audioBottle.play();
+            allAudios.push(this.audioBottle);
         }
         else {
             this.audioCoin.play();
+            allAudios.push(this.audioCoin);
         }
     }
 
@@ -178,6 +174,7 @@ class World {
         setInterval(() => {
             this.audioWater.volume = 0.8;
             this.audioWater.play();
+            allAudios.push(this.audioWater);
         }, 4000);
     }
 
@@ -204,6 +201,7 @@ class World {
 
     bubblesound() {
         this.audioBubble.play();
+        allAudios.push(this.audioBubble);
     }
 
 
@@ -241,7 +239,7 @@ class World {
 
     /**
      * Draw an Array of Objects on the Canvas
-     * @param {DrawableObject} objects
+     * @param {DrawableObject} objects - Array of Objects
      */
     addObjectsToMap(objects) {
         objects.forEach(object => {

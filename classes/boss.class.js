@@ -143,6 +143,7 @@ class Boss extends MovableObject {
         setInterval(() => {
             this.audioBoss.volume = 0.5;
             this.audioBoss.play();
+            allAudios.push(this.audioBoss);
             if(this.checkForDead()) {
                 this.audioBoss.muted = true;
                 this.audioBoss.pause();

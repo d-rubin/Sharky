@@ -11,7 +11,10 @@ class StatusBar extends DrawableObject {
         this.setPercentage(percentage);
     }
 
-    // Chooses witch Image is Displayed
+    /**
+     * Chooses witch Statusbarimage to display
+     * @param {*} percentage - The Current Percentage of the Life of the Object
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
             let path = this.array[this.resolveImageIndex()];

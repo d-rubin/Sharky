@@ -1,6 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let allAudios = [];
+
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -130,24 +132,34 @@ function openStartscreen() {
     document.getElementById('youWin').classList.add('d-none');
 }
 
+
+let audioStop; 
 // Mutes all Audio when the Button is pressed
 function mute() {
     let mute = document.getElementById('mute');
-    let audio = document.querySelectorAll('audio');
     if(mute.src == "http://daniel-rubin.developerakademie.net/Sharkie/img/mute-3-48.png") {
         mute.src = "img/volume-up-4-48.png";
-        [].forEach.call(audio, function(elem) { audioMute(elem); });
+        stopAudio();
     }
     else {
         mute.src = "img/mute-3-48.png";
-        [].forEach.call(audio, function(elem) { audioVolume(elem); });
+        startAudio();
     }
 }
 
-function audioMute(elem) {
-    elem.muted = true;
+
+function stopAudio() {
+    audioStop = setInterval(() => {
+        allAudios.forEach(audio => {
+            audio.muted = true;
+        });
+    }, 1000 / 60);
 }
 
-function audioVolume(elem) {
-    elem.mute = false;
+
+function startAudio() {
+    clearInterval(audioStop);
+        allAudios.forEach(audio => {
+            audio.muted = false;
+        });
 }

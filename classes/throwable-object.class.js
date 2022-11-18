@@ -25,7 +25,7 @@ class ThrowableObject extends MovableObject {
                 enemy.energy = 0;
             }
             else if(this.isCollidingBoss(enemy) && enemy instanceof Boss) {
-                enemy.energy -= 0.1;
+                enemy.energy -= 0.03;
                 world.statusBar_Boss.setPercentage(enemy.energy);
                 enemy.hurt = true;
             }
@@ -33,16 +33,31 @@ class ThrowableObject extends MovableObject {
     }
 
     throw(x, y) {
-        this.x = x; 
-        this.y = y; 
-        this.applyGravity();
-        this.moveRight();
+        if(world.character.otherDirection) {
+            this.moveLeft();
+            this.x = (x - (world.character.width + 20));
+            this.y = y;
+            this.applyGravity();
+        }
+        else {
+            this.x = x; 
+            this.y = y; 
+            this.applyGravity();
+            this.moveRight();
+        }
     }
 
 
     moveRight(){
         setInterval(() => {
             this.x += 10;
+        }, 1000 / 30);
+    }
+
+
+    moveLeft(){
+        setInterval(() => {
+            this.x -= 10;
         }, 1000 / 30);
     }
 
