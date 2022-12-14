@@ -99,22 +99,22 @@ function mobileButtons() {
             keyboard.RIGHT = false;
         });
     
-        document.getElementById('buttonFin').addEventListener('touchstart', (e) => {
+        document.getElementById('buttonBublle').addEventListener('touchstart', (e) => {
             e.preventDefault();
             keyboard.D = true;
         });
     
-        document.getElementById('buttonFin').addEventListener('touchend', (e) => {
+        document.getElementById('buttonBublle').addEventListener('touchend', (e) => {
             e.preventDefault();
             keyboard.D = false;
         });
     
-        document.getElementById('buttonBubble').addEventListener('touchstart', (e) => {
+        document.getElementById('buttonFin').addEventListener('touchstart', (e) => {
             e.preventDefault();
             keyboard.SPACE = true;
         });
     
-        document.getElementById('buttonBubble').addEventListener('touchend', (e) => {
+        document.getElementById('buttonFin').addEventListener('touchend', (e) => {
             e.preventDefault();
             keyboard.SPACE = false;
         });
@@ -137,7 +137,7 @@ let audioStop;
 // Mutes all Audio when the Button is pressed
 function mute() {
     let mute = document.getElementById('mute');
-    if(mute.src == "http://daniel-rubin.developerakademie.net/Sharkie/img/mute-3-48.png") {
+    if(mute.src == "https://sharky.daniel-rubin.de/img/mute-3-48.png") {
         mute.src = "img/volume-up-4-48.png";
         stopAudio();
     }
