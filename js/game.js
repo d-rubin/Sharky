@@ -99,12 +99,12 @@ function mobileButtons() {
             keyboard.RIGHT = false;
         });
     
-        document.getElementById('buttonBublle').addEventListener('touchstart', (e) => {
+        document.getElementById('buttonBubble').addEventListener('touchstart', (e) => {
             e.preventDefault();
             keyboard.D = true;
         });
     
-        document.getElementById('buttonBublle').addEventListener('touchend', (e) => {
+        document.getElementById('buttonBubble').addEventListener('touchend', (e) => {
             e.preventDefault();
             keyboard.D = false;
         });
